@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<extension type="module" version="3.0" client="site" method="upgrade">
+	<name>Eventbrite</name>
+	<author>David Hendy</author>
+	<creationDate>May 2021</creationDate>
+	<copyright>Copyright (C) 2021 2buy2.com</copyright>
+	<license>GNU General Public License version 2 or later</license>
+	<authorEmail>david.hendy@2buy2.com</authorEmail>
+	<authorURL>http://www.2buy2.com/</authorURL>
+	<version>0.0.1</version>
+	<description>Display Eventbrite event information in a module.</description>
+	<namespace>2buy2\Module\Eventbrite</namespace>
+	<files>
+		<filename>mod_eventbrite.xml</filename>
+		<filename module="mod_eventbrite">mod_eventbrite.php</filename>
+		<filename>helper.php</filename>
+		<filename>index.html</filename>
+		<folder>tmpl</folder>
+		<folder>assets</folder>
+	</files>
+	<languages folder="language">
+		<language tag="en-GB">en-GB/en-GB.mod_eventbrite.ini</language>
+	</languages>
+	<config>
+		<fields name="params">
+			<fieldset name="basic">
+				<field name="displayName" type="radio" default="1" label="Display name" description="" class="btn-group btn-group-yesno" required="true">
+				  <option value="1">JYes</option>
+				  <option value="0">JNo</option>
+				</field>
+				<field name="displayEmail" type="radio" default="1" label="Display email address" description="" class="btn-group btn-group-yesno" required="true">
+				  <option value="1">JYes</option>
+				  <option value="0">JNo</option>
+				</field>
+				<field name="displayPosition" type="radio" default="1" label="Display job role" description="" class="btn-group btn-group-yesno" required="true">
+				  <option value="1">JYes</option>
+				  <option value="0">JNo</option>
+				</field>
+				<field name="displayPhoto" type="radio" default="1" label="Display photograph" description="" class="btn-group btn-group-yesno" required="true">
+				  <option value="1">JYes</option>
+				  <option value="0">JNo</option>
+				</field>
+				<field name="displayPhotoType" type="radio" default="avatar_clean" label="Which version of the photograph?" description="" class="btn-group" showon="displayPhoto:1">
+				  <option value="avatar_clean">Original</option>
+				  <option value="avatar_mini">Thumbnail</option>
+				</field>
+				<field name="displayPhotoPosition" type="radio" default="left" label="Position of photograph" description="" class="btn-group" showon="displayPhoto:1">
+				  <option value="top">Top</option>
+				  <option value="right">Right</option>
+				  <option value="bottom">Bottom</option>
+				  <option value="left">Left</option>
+				</field>
+				<field name="displayPhotoSize" type="radio" default="left" label="Size of photograph" description="" class="btn-group" showon="displayPhoto:1[AND]displayPhotoPosition:left[OR]displayPhotoPosition:right">
+				  <option value="1-1">100%</option>
+				  <option value="4-5">80%</option>
+				  <option value="3-4">75%</option>
+				  <option value="2-3">66.6%</option>
+				  <option value="3-5">60%</option>
+				  <option value="1-2">50%</option>
+				  <option value="2-5">40%</option>
+				  <option value="1-3">33.3%</option>
+				  <option value="1-4">25%</option>
+				  <option value="1-5">20%</option>
+				</field>
+				<field name="displayPhotoHeight" type="radio" default="auto" label="Size of photograph" description="" class="btn-group" showon="displayPhoto:1[AND]displayPhotoPosition:left[OR]displayPhotoPosition:right">
+					<option value="match">Matched to other column</option>
+					<option value="auto">Auto</option>
+				</field>
+				<field name="displayContent" type="radio" default="none" label="Which content do you want to show?" description="" class="btn-group" required="true">
+				  <option value="none">None</option>
+				  <option value="blurb">Blurb</option>
+				  <option value="quote">Quote</option>
+				</field>
+				<field name="displayRegions" type="radio" default="1" label="Display assigned regions" description="" class="btn-group btn-group-yesno" required="true">
+				  <option value="1">JYes</option>
+				  <option value="0">JNo</option>
+				</field>
+				<field name="displayForm" type="radio" default="1" label="Display a contact form" description="" class="btn-group btn-group-yesno" required="true">
+				  <option value="1">JYes</option>
+				  <option value="0">JNo</option>
+				</field>
+			</fieldset>
+		</fields>
+	</config>
+</extension>
