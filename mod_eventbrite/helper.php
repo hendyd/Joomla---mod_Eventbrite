@@ -20,43 +20,66 @@ use Joomla\CMS\Helper\ModuleHelper;
 use Joomla\Registry\Registry;
 use Joomla\CMS\Response\JsonResponse;
 
+require_once('libraries/php/eventbrite-sdk-php/HttpClient.php');
+
 class modEventbriteHelper{
 
-	private $base_url = 'https://www.eventbriteapi.com/v3/';
+	private $client;
+
+	private $main_org_id = '258029550293';
 
 	public function getParams($params, $type)
 	{
 		return $params->get($type);
 	}
 
-	private function restCall($url)
+	public function generateToken(string $apikey)
 	{
-		$ch = curl_init($url);
-		curl_setopt($ch, CURLOPT_URL, $url);
-		curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-		curl_setopt($ch, CURLOPT_TIMEOUT, 10);
-		curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'GET');
-		curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
-		$response = curl_exec($ch);
-		$err = curl_error($ch);
-		curl_close($ch);
-		if($err){
-			Log::add($err, Log::DEBUG, 'mod-eventbrite');
+		$this->client = new HttpClient($apikey);
+		return $this->client;
+	}
+
+	public function getEvents(string $org_id, string $key)
+	{
+		$this->client = $this->generateToken($key);
+		$getEventsList = $this->client->get(
+			sprintf('/organizations/%s/events/', $this->main_org_id), 
+			array('venue', 'organizer', 'format'), 
+			array('status' => 'live')
+		);
+		foreach($getEventsList['events'] as $k => $v){
+			if($v['organizer']['id'] != $org_id){
+				unset($getEventsList['events'][$k]);
+			}
+		}
+		if(empty($getEventsList['events'])){
 			return false;
 		} else {
-			if($response){
-				return json_decode($response);
-			} else {
-				Log::add('No valid response given', Log::DEBUG, 'mod-eventbrite');
-				return false;
-			}
+			return array_values($getEventsList['events']);
 		}
 	}
 
-	public function getEvents(string $org_id = '', string $apikey = '')
+	public function mapTag($tag)
 	{
-		$url = $this->base_url.'organizations/'.$org_id.'/events/?expand=venue,organizer&status=live&token='.$apikey;
-		return $this->restCall($url);
+		switch($tag){
+			case 'Seminar':
+				return 'Webinar';
+				break;
+			default:
+				return $tag;
+				break;
+		}
+	}
+
+	public function generateStyles($event)
+	{
+		?>
+		<style>
+			.event-<?= $event['id']; ?> {
+				background-image: url('<?= $event['logo']['url']; ?>');
+			}
+		</style>
+		<?php
 	}
 
 }

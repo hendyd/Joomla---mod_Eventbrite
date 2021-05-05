@@ -9,11 +9,9 @@ use Joomla\CMS\Factory;
 
 require_once(dirname(__FILE__).'/helper.php');
 
-$helper = new modStaffSpotlightHelper;
-//$template = $helper->getParams($params, 'template');
-$apikey = $helper->getParams($params, 'apikey');
-$organisation = $helper->getParams($params, 'organisation');
-$events = $helper->getEvents($organisation, $apikey);
-
-//require ModuleHelper::getLayoutPath('mod_eventbrite', $template);
+$helper = new modEventbriteHelper();
+$key = $helper->getParams($params, 'apikey');
+$org = $helper->getParams($params, 'organisation');
+$events = $helper->getEvents($org, $helper->getParams($params, 'apikey'));
+$numberOfEvents = $helper->getParams($params, 'numberOfEvents');
 require ModuleHelper::getLayoutPath('mod_eventbrite');

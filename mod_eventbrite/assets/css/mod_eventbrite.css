@@ -1,0 +1,20 @@
+.event--item {
+  height: 0;
+  padding-top: 56.25%;
+  overflow: hidden;
+}
+
+.event--item span {
+  background-color: rgba(255, 255, 255, 0.8);
+  color: #333E48;
+  font-size: 18px;
+  padding: 3px 8px;
+}
+
+.event--item .event--item__title {
+  background-color: rgba(255, 255, 255, 0.8);
+  color: #333E48;
+  font-size: 22px;
+  padding: 3px 8px;
+  width: 100%;
+}

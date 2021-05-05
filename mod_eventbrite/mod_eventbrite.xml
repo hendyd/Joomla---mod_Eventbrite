@@ -7,7 +7,7 @@
 	<license>GNU General Public License version 2 or later</license>
 	<authorEmail>david.hendy@2buy2.com</authorEmail>
 	<authorURL>http://www.2buy2.com/</authorURL>
-	<version>0.0.2</version>
+	<version>0.0.7</version>
 	<description>Display Eventbrite event information in a module.</description>
 	<namespace>2buy2\Module\Eventbrite</namespace>
 	<files>
@@ -16,6 +16,7 @@
 		<filename>helper.php</filename>
 		<filename>index.html</filename>
 		<folder>tmpl</folder>
+		<folder>libraries</folder>
 		<folder>assets</folder>
 	</files>
 	<config>
@@ -23,6 +24,7 @@
 			<fieldset name="basic">
 				<field name="apikey" type="text" default="" label="API Key" description="Authorised API Key for Eventbrite" />
 				<field name="organisation" type="text" default="" label="Organisation ID" description="Eventbrite ID for organisation" />
+				<field name="numberOfEvents" type="number" default="1" label="Maximum number of events to display" description="Maximum number of events to display" min="1" max="100" step="1" />
 			</fieldset>
 		</fields>
 	</config>
